@@ -1,0 +1,22 @@
+/* public/css/style.css */
+:root {
+    --primary: #e50914;
+    --bg: #141414;
+    --surface: #2f2f2f;
+    --text: #ffffff;
+    --text-muted: #aaa;
+}
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+}
+.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 20px 0; }
+header { background: #000; border-bottom: 2px solid var(--primary); }
+header .container { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+.logo { margin: 0; font-size: 24px; color: var(--primary); }
+.hidden { display: none !important; }
+.btn-primary { background: var(--primary); color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold;}
+.btn-secondary { background: var(--surface); color: #fff; border: 1px solid #555; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;}
+.btn-back { background: none; border: none; color: var(--primary); cursor: pointer; font-size: 16px; margin-bottom: 15px; padding: 0; }

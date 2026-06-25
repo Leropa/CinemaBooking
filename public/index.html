@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaBooking — Сеть Кинотеатров</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/movie.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">🍿 CinemaBooking</h1>
+            <nav><a href="admin.html" class="btn-secondary">Вход для админа</a></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="movies-section">
+            <h2>Сейчас в прокате</h2>
+            <div id="movies-grid" class="movies-grid">
+                </div>
+        </section>
+
+        <section id="shows-section" class="hidden">
+            <button id="back-to-movies" class="btn-back">← Назад к фильмам</button>
+            <h2 id="selected-movie-title">Выбор сеанса</h2>
+            <div id="shows-list" class="shows-list">
+                </div>
+        </section>
+
+        <section id="hall-section" class="hidden">
+            <button id="back-to-shows" class="btn-back">← Назад к сеансам</button>
+            <h2>Выберите место в зале</h2>
+            
+            <div class="screen">ЭКРАН</div>
+            <div id="hall-grid" class="hall-grid">
+                </div>
+
+            <div class="legend">
+                <span class="legend-item"><span class="seat-sample free"></span> Свободно</span>
+                <span class="legend-item"><span class="seat-sample held"></span> Бронь (10 мин)</span>
+                <span class="legend-item"><span class="seat-sample booked"></span> Занято</span>
+            </div>
+
+            <div id="booking-form-container" class="booking-form hidden">
+                <h3>Оформление заказа</h3>
+                <p>Выбрано место: <strong id="selected-seat-info">Рядо 0, Место 0</strong></p>
+                <p>К оплате: <strong id="ticket-price">0</strong> руб.</p>
+                
+                <div id="hold-timer" class="timer">Время на оплату: <span id="timer-count">10:00</span></div>
+
+                <form id="purchase-form">
+                    <input type="email" id="customer-email" placeholder="Введите ваш Email" required>
+                    <button type="submit" class="btn-primary">Подтвердить покупку</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

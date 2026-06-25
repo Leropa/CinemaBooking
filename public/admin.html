@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель Администратора</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">🍿 CinemaBooking [АДМИНКА]</h1>
+            <nav><a href="index.html" class="btn-secondary">На главный сайт</a></nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="auth-block" class="admin-panel">
+            <h2>Вход для персонала</h2>
+            <form id="login-form">
+                <input type="text" id="admin-username" placeholder="Логин" required><br>
+                <input type="password" id="admin-password" placeholder="Пароль" required><br>
+                <button type="submit" class="btn-primary">Войти</button>
+            </form>
+        </section>
+
+        <section id="dashboard-block" class="hidden">
+            <div class="admin-grid">
+                <div class="panel-card">
+                    <h3>Добавить фильм</h3>
+                    <form id="add-movie-form">
+                        <input type="text" id="m-title" placeholder="Название фильма" required>
+                        <textarea id="m-desc" placeholder="Описание" required></textarea>
+                        <input type="number" id="m-duration" placeholder="Длительность (мин)" required>
+                        <button type="submit" class="btn-primary">Создать</button>
+                    </form>
+
+                    <h3>Текущий прокат</h3>
+                    <div id="admin-movies-list">
+                        </div>
+                </div>
+
+                <div class="panel-card">
+                    <h3>Создать сеанс</h3>
+                    <form id="add-show-form">
+                        <label for="show-movie-select">Фильм:</label>
+                        <select id="show-movie-select" required></select>
+                        
+                        <label for="show-time">Время начала:</label>
+                        <input type="datetime-local" id="show-time" required>
+                        
+                        <label for="show-price">Цена билета (руб):</label>
+                        <input type="number" id="show-price" placeholder="500" required>
+                        
+                        <button type="submit" class="btn-primary">Добавить в расписание</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
