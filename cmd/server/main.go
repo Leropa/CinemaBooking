@@ -2,6 +2,8 @@ package main
 
 import (
 	"cinema_booking/db"
+	"cinema_booking/internal/handlers"
+	"log"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -13,8 +15,11 @@ func main() {
 
 	r := chi.NewRouter()
 
-	r.Get("/api/v1")
+	r.Handle("/*", http.StripPrefix("/", http.FileServer(http.Dir("public"))))
+	r.Get("/api/v1/movies", handlers.GetMovies)
+	r.Get("/api/v1/shows", handlers.GetShows)
+	r.Get("/api/v1/seats", handlers.GetSeats)
 
-	http.ListenAndServe(":8000", r)
+	log.Fatal(http.ListenAndServe(":8000", r))
 
 }

@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/lib/pq"
@@ -12,12 +11,18 @@ var DB *sql.DB
 
 func Init() {
 	var err error
-	infoDB := "host=localhost port=5432 user=postgres password=leropa dbname=cinema_booking sslmode=disable"
+	infoDB := `
+	host=localhost 
+	port=5432 
+	user=postgres 
+	password=leropa 
+	dbname=cinema_booking 
+	sslmode=disable
+	`
 
 	DB, err = sql.Open("postgres", infoDB)
 	if err != nil {
-		fmt.Print("Не получилось открыть Базу дынных:", err)
-		return
+		log.Fatal("Не получилось открыть Базу дынных:", err)
 	}
 
 	query := `CREATE TABLE IF NOT EXISTS admin_users(
