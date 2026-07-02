@@ -19,6 +19,7 @@ func main() {
 	r.Get("/api/v1/movies", handlers.GetMovies)
 	r.Get("/api/v1/shows", handlers.GetShows)
 	r.Get("/api/v1/seats", handlers.GetSeats)
+	r.Post("/api/v1/book", handlers.BookSeats)
 
 	log.Fatal(http.ListenAndServe(":8000", r))
 

@@ -68,7 +68,7 @@ async function showMovieSchedule(movieId, title) {
     } catch (err) { console.error("Ошибка загрузки сеансов:", err); }
 }
 
-// 3. Загрузка интерактивного зала
+// 3. Загрузка интерактивного зала (Синхронизировано со статусом 'available' из Go)
 async function openHallMap(showId, price) {
     selectedShowId = showId;
     document.getElementById('booking-form-container').classList.add('hidden');
@@ -85,7 +85,8 @@ async function openHallMap(showId, price) {
             seatEl.className = `seat ${seat.status}`;
             seatEl.innerText = seat.number;
             
-            if (seat.status === 'free') {
+            // Проверяем статус 'available', который генерирует наш бэкенд на Go
+            if (seat.status === 'available') {
                 seatEl.onclick = () => selectSeat(seatEl, seat.id, seat.row, seat.number, price);
             }
             grid.appendChild(seatEl);
@@ -94,7 +95,7 @@ async function openHallMap(showId, price) {
     } catch (err) { console.error("Ошибка карты зала:", err); }
 }
 
-// 4. Клик по свободному месту (Временный захват на бэке)
+// 4. Клик по свободному месту
 async function selectSeat(element, seatId, row, number, price) {
     // Снимаем выделение с прошлого выбранного места локально
     document.querySelectorAll('.seat.selected').forEach(el => el.classList.remove('selected'));
@@ -129,30 +130,29 @@ function startCountdown(duration) {
     }, 1000);
 }
 
-// 5. Покупка (Финальное подтверждение на бэк)
+// 5. Покупка (Финальное подтверждение на защищенный транзакцией Go-бэк)
 async function handlePurchase(e) {
     e.preventDefault();
-    const email = document.getElementById('customer-email').value;
 
     try {
-        const res = await fetch(`${API_BASE}/bookings`, {
+        // Делаем запрос на наш эндпоинт бронирования
+        const res = await fetch(`${API_BASE}/book`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                show_id: selectedShowId,
-                seat_id: selectedSeatId,
-                customer_email: email
+                // Передаем ID выбранного сиденья массивом, как требует BookRequest в Go
+                seat_ids: [selectedSeatId] 
             })
         });
 
         if (res.ok) {
             clearInterval(countdownInterval);
-            alert("Билет успешно куплен! Проверяйте почту.");
+            alert("Билет успешно куплен!");
             switchSection('movies-section');
             loadMovies();
         } else {
-            const errData = await res.json();
-            alert(`Ошибка: ${errData.message || "Не удалось купить билет"}`);
+            // Сюда попадем, если бэкенд выкинул ошибку (например, статус 409 Conflict при гонке)
+            alert("Ошибка: Это место уже забронировано другим пользователем.");
         }
     } catch (err) { console.error("Ошибка покупки:", err); }
 }
